@@ -203,7 +203,7 @@ def main() -> int:
             "## Low-code sample",
             "",
             "Optional file "
-            "`../ai-image-authenticator-samples/low-code-illusion-sample.png` (relative to repo) "
+            "`../ai-image-authenticators-samples/low-code-illusion-sample.png` (relative to repo) "
             "was **not found** on this runner. Prior committed JSON "
             "`samples/low-code-illusion-result.json` is historical and may predate the 12-analyzer bank \u2014 "
             "re-run the harness on Mac when that PNG is available.",

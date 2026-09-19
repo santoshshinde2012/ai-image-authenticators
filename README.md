@@ -33,7 +33,7 @@ Industry practice is often **dual-layer** (C2PA + SynthID-class watermarks). We 
 **Requirements:** Python 3.12+ ([uv](https://github.com/astral-sh/uv)), Node.js 20+, optional [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) (`brew install tesseract`).
 
 ```bash
-git clone https://github.com/santoshshinde2012/ai-image-authenticator.git
+git clone https://github.com/santoshshinde2012/ai-image-authenticators.git
 cd ai-image-authenticator
 cp .env.example .env   # optional
 uv sync --all-groups
