@@ -7,19 +7,20 @@
 ## Methodology
 
 - Harness: `scripts/run_local_benchmark.py` → `AnalysisService.analyze_bytes`
-- Git SHA: `dcfa889514b901e980b33c100ad18f7fc297b614`
+- Git SHA: `f555d6e8f2278456f9e2edcb1fb6d11a2409e3e3`
 - Weights version: `1.3` (see `docs/weights.md` / `application/services/weights.py`)
 - Analyzer count: **12** (`metadata, provenance, labels, ela, fft, dct, noise, srm, bayar, local_corr, texture, screenshot`)
-- Ran at (UTC): `2026-09-18T07:05:50.151490+00:00`
+- Ran at (UTC): `2026-09-19T06:01:44.759313+00:00`
 - Machine note: agent box local run (Mac path used when reachable)
+- `ai_probability` is a heuristic fusion score, not a calibrated probability; `confidence` is internal signal confidence, not measured accuracy.
 
 ## Summary table
 
-| Sample | Verdict | AI probability | Confidence | analysis_ms | Evidence paths | Analyzers | Screenshot |
+| Sample | Verdict | AI cue score | Signal confidence | analysis_ms | Evidence paths | Analyzers | Screenshot |
 |---|---|---:|---:|---:|---|---:|:---:|
-| `samples/synthetic-screenshot.png` | `ai_generated` | 0.8889 | 0.6946 | 1251 | pixel_forensic, screenshot_path | 12 | yes |
-| `samples/synthetic-smooth.png` | `ai_generated` | 0.8467 | 0.7649 | 946 | pixel_forensic | 12 | no |
-| `ai-image-authenticator-samples/low-code-illusion-sample.png` | `ai_generated` | 0.9200 | 0.9000 | 4121 | provenance_contract | 12 | no |
+| `samples/synthetic-screenshot.png` | `ai_generated` | 0.8889 | 0.6946 | 1219 | pixel_forensic, screenshot_path | 12 | yes |
+| `samples/synthetic-smooth.png` | `ai_generated` | 0.8467 | 0.7649 | 932 | pixel_forensic | 12 | no |
+| `ai-image-authenticator-samples/low-code-illusion-sample.png` | `ai_generated` | 0.9200 | 0.9000 | 3919 | provenance_contract | 12 | no |
 
 ## Per-sample key signal scores
 
@@ -106,7 +107,7 @@ Fusion notes:
 ## How to run larger evals
 
 ```bash
-# Local samples (writes samples/benchmarks/local_benchmark.json + docs/benchmarks.md)
+# Local samples (writes benchmark JSON, web chart summary, and docs/benchmarks.md)
 uv run python scripts/run_local_benchmark.py
 
 # Point the harness at your own folder by editing DEFAULT_SAMPLES or invoking AnalysisService
@@ -116,4 +117,5 @@ uv run python scripts/run_local_benchmark.py
 ```
 
 Raw JSON: `samples/benchmarks/local_benchmark.json`
+Web chart data: `apps/web/src/features/analysis/benchmark_summary.json`
 

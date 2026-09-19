@@ -96,6 +96,12 @@ def main() -> int:
         type=Path,
         default=ROOT / "docs" / "benchmarks.md",
     )
+    parser.add_argument(
+        "--out-web-json",
+        type=Path,
+        default=ROOT / "apps" / "web" / "src" / "features" / "analysis" / "benchmark_summary.json",
+        help="Compact benchmark data bundled into the web chart",
+    )
     args = parser.parse_args()
 
     samples: list[Path] = [p for p in DEFAULT_SAMPLES if p.is_file()]
@@ -126,8 +132,8 @@ def main() -> int:
     payload = {
         "benchmark_type": "local_samples_only",
         "disclaimer": (
-            "Measured on repository sample images only. "
-            "Not a GenImage/NTIRE/public leaderboard result."
+            "Measured on local sample fixtures only. This is not an accuracy estimate "
+            "or a GenImage/NTIRE/public leaderboard result."
         ),
         "git_sha": sha,
         "weights_version": WEIGHTS_VERSION,
@@ -141,6 +147,26 @@ def main() -> int:
 
     args.out_json.parent.mkdir(parents=True, exist_ok=True)
     args.out_json.write_text(json.dumps(payload, indent=2) + "\n")
+    web_payload = {
+        "benchmark_type": payload["benchmark_type"],
+        "git_sha": sha,
+        "weights_version": WEIGHTS_VERSION,
+        "analyzer_count": len(box.analyzer_ids),
+        "ran_at_utc": payload["ran_at_utc"],
+        "low_code_sample_found": not skipped_low_code,
+        "results": [
+            {
+                "sample": result["sample"],
+                "filename": result["filename"],
+                "ai_probability": result["ai_probability"],
+                "confidence": result["confidence"],
+                "analysis_ms": result["analysis_ms"],
+            }
+            for result in results
+        ],
+    }
+    args.out_web_json.parent.mkdir(parents=True, exist_ok=True)
+    args.out_web_json.write_text(json.dumps(web_payload, indent=2) + "\n")
 
     lines = [
         "# Local benchmarks (measured only)",
@@ -157,10 +183,11 @@ def main() -> int:
         f"- Analyzer count: **{len(box.analyzer_ids)}** (`{', '.join(box.analyzer_ids)}`)",
         f"- Ran at (UTC): `{payload['ran_at_utc']}`",
         "- Machine note: agent box local run (Mac path used when reachable)",
+        "- `ai_probability` is a heuristic fusion score, not a calibrated probability; `confidence` is internal signal confidence, not measured accuracy.",
         "",
         "## Summary table",
         "",
-        "| Sample | Verdict | AI probability | Confidence | analysis_ms | Evidence paths | Analyzers | Screenshot |",
+        "| Sample | Verdict | AI cue score | Signal confidence | analysis_ms | Evidence paths | Analyzers | Screenshot |",
         "|---|---|---:|---:|---:|---|---:|:---:|",
     ]
     for r in results:
@@ -221,7 +248,7 @@ def main() -> int:
         "## How to run larger evals",
         "",
         "```bash",
-        "# Local samples (writes samples/benchmarks/local_benchmark.json + docs/benchmarks.md)",
+        "# Local samples (writes benchmark JSON, web chart summary, and docs/benchmarks.md)",
         "uv run python scripts/run_local_benchmark.py",
         "",
         "# Point the harness at your own folder by editing DEFAULT_SAMPLES or invoking AnalysisService",
@@ -231,10 +258,12 @@ def main() -> int:
         "```",
         "",
         f"Raw JSON: `{args.out_json.relative_to(ROOT)}`",
+        f"Web chart data: `{args.out_web_json.relative_to(ROOT)}`",
         "",
     ]
     args.out_md.write_text("\n".join(lines) + "\n")
     print(f"Wrote {args.out_json}")
+    print(f"Wrote {args.out_web_json}")
     print(f"Wrote {args.out_md}")
     return 0
 

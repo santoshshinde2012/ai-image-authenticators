@@ -15,9 +15,9 @@ function Gauge({ probability, color }: { probability: number; color: string }) {
       />
       <div className="absolute inset-[10px] flex flex-col items-center justify-center rounded-full bg-[#0b101a] shadow-inner">
         <div className="text-4xl font-semibold tabular-nums" style={{ color }}>
-          {pct}%
+          {pct}
         </div>
-        <div className="text-xs uppercase tracking-widest text-slate-400">AI probability</div>
+        <div className="text-xs uppercase tracking-widest text-slate-400">AI cue score /100</div>
       </div>
     </div>
   )
@@ -37,14 +37,16 @@ export function VerdictPanel({ result }: { result: AnalysisResult }) {
               Screenshot-like
             </span>
           )}
-          <p className="mt-4 text-sm leading-relaxed text-slate-300">{result.summary}</p>
+          <p className="mt-4 text-sm leading-relaxed text-slate-300">
+            {result.summary.replace(/ensemble AI probability (\d+)%/i, (_, score: string) => `ensemble AI cue score ${score}/100`)}
+          </p>
           <div className="mt-4 flex flex-wrap gap-4 text-xs text-slate-500">
             <span>{result.filename}</span>
             <span>
               {result.dimensions[0]}×{result.dimensions[1]}
             </span>
             <span>{result.analysis_ms} ms</span>
-            <span>confidence {(result.confidence * 100).toFixed(0)}%</span>
+            <span>signal confidence {(result.confidence * 100).toFixed(0)}%</span>
           </div>
           {result.evidence_paths && result.evidence_paths.length > 0 && (
             <div className="mt-3 flex flex-wrap gap-2">

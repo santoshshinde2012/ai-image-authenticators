@@ -1,0 +1,31 @@
+{
+  "benchmark_type": "local_samples_only",
+  "git_sha": "f555d6e8f2278456f9e2edcb1fb6d11a2409e3e3",
+  "weights_version": "1.3",
+  "analyzer_count": 12,
+  "ran_at_utc": "2026-09-19T06:01:44.759313+00:00",
+  "low_code_sample_found": true,
+  "results": [
+    {
+      "sample": "samples/synthetic-screenshot.png",
+      "filename": "synthetic-screenshot.png",
+      "ai_probability": 0.8889,
+      "confidence": 0.6946,
+      "analysis_ms": 1219
+    },
+    {
+      "sample": "samples/synthetic-smooth.png",
+      "filename": "synthetic-smooth.png",
+      "ai_probability": 0.8467,
+      "confidence": 0.7649,
+      "analysis_ms": 932
+    },
+    {
+      "sample": "ai-image-authenticator-samples/low-code-illusion-sample.png",
+      "filename": "low-code-illusion-sample.png",
+      "ai_probability": 0.92,
+      "confidence": 0.9,
+      "analysis_ms": 3919
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { analyzeImage, checkHealth } from '../features/analysis/api'
 import { SignalCard, UploadZone, VerdictPanel, VizGallery } from '../features/analysis/components'
+import { BenchmarkChart } from '../features/analysis/components/BenchmarkChart'
 import type { AnalysisResult } from '../features/analysis/types'
 
 export default function App() {
@@ -55,6 +56,9 @@ export default function App() {
             FFT, DCT, noise, texture, and screenshot heuristics.
           </p>
         </div>
+        <a href="#benchmark" className="rounded-lg border border-slate-700 bg-slate-900/60 px-3 py-2 text-sm font-medium text-sky-200 transition hover:border-sky-500/60 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+          Local benchmark ↓
+        </a>
       </header>
 
       <div className="grid gap-6 lg:grid-cols-12">
@@ -105,11 +109,11 @@ export default function App() {
             <div className="rounded-2xl border border-slate-800 bg-slate-900/40 p-8 text-slate-400">
               <h2 className="mb-2 text-lg font-medium text-slate-200">Results dashboard</h2>
               <p className="text-sm leading-relaxed">
-                Upload an image to see a calibrated verdict, per-signal scores, and forensic visualizations (ELA map,
+                Upload an image to see an ensemble assessment, per-signal scores, and forensic visualizations (ELA map,
                 FFT spectrum, noise residual).
               </p>
               <ul className="mt-4 list-disc space-y-1 pl-5 text-sm">
-                <li>Nine-signal classical ensemble (offline, no model download required)</li>
+                <li>Twelve-check classical ensemble (offline, no model download required)</li>
                 <li>C2PA / Content Credentials when manifests remain; OCR for visible Made-with-AI badges</li>
                 <li>Screenshot detection softens overconfident “real camera” claims</li>
               </ul>
@@ -151,6 +155,8 @@ export default function App() {
           )}
         </section>
       </div>
+
+      <BenchmarkChart />
 
       <footer className="mt-12 border-t border-slate-800/80 pt-6 text-center text-xs text-slate-600">
         Local forensic tool · classical ensemble v1 · SOLID layout · optional ML models documented as Phase 2

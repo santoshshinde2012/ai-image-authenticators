@@ -1,7 +1,7 @@
 {
   "benchmark_type": "local_samples_only",
-  "disclaimer": "Measured on repository sample images only. Not a GenImage/NTIRE/public leaderboard result.",
-  "git_sha": "dcfa889514b901e980b33c100ad18f7fc297b614",
+  "disclaimer": "Measured on local sample fixtures only. This is not an accuracy estimate or a GenImage/NTIRE/public leaderboard result.",
+  "git_sha": "f555d6e8f2278456f9e2edcb1fb6d11a2409e3e3",
   "weights_version": "1.3",
   "weights": {
     "metadata": 0.05,
@@ -32,7 +32,7 @@
     "screenshot"
   ],
   "analyzer_count": 12,
-  "ran_at_utc": "2026-09-18T07:05:50.151490+00:00",
+  "ran_at_utc": "2026-09-19T06:01:44.759313+00:00",
   "low_code_sample_found": true,
   "results": [
     {
@@ -41,7 +41,7 @@
       "verdict": "ai_generated",
       "ai_probability": 0.8889,
       "confidence": 0.6946,
-      "analysis_ms": 1251,
+      "analysis_ms": 1219,
       "evidence_paths": [
         "pixel_forensic",
         "screenshot_path"
@@ -90,7 +90,8 @@
             "trusted": false,
             "limits": "Only digitalSourceType claims inside a C2PA manifest container (PNG caBX, JPEG APP11/JUMBF, WebP C2PA chunk) count. With the optional c2pa-python reader the signature and hard binding are validated and remote manifest fetch is disabled; no trust list is configured, so 'Valid' is not 'Trusted'. Without the reader, claims are unverified. Not a SynthID decoder; not a platform upload pipeline.",
             "png_cabx_chunk": false,
-            "png_cabx_bytes": 0
+            "png_cabx_bytes": 0,
+            "jpeg_jumbf_app11": false
           }
         },
         {
@@ -319,7 +320,7 @@
       "verdict": "ai_generated",
       "ai_probability": 0.8467,
       "confidence": 0.7649,
-      "analysis_ms": 946,
+      "analysis_ms": 932,
       "evidence_paths": [
         "pixel_forensic"
       ],
@@ -367,7 +368,8 @@
             "trusted": false,
             "limits": "Only digitalSourceType claims inside a C2PA manifest container (PNG caBX, JPEG APP11/JUMBF, WebP C2PA chunk) count. With the optional c2pa-python reader the signature and hard binding are validated and remote manifest fetch is disabled; no trust list is configured, so 'Valid' is not 'Trusted'. Without the reader, claims are unverified. Not a SynthID decoder; not a platform upload pipeline.",
             "png_cabx_chunk": false,
-            "png_cabx_bytes": 0
+            "png_cabx_bytes": 0,
+            "jpeg_jumbf_app11": false
           }
         },
         {
@@ -597,7 +599,7 @@
       "verdict": "ai_generated",
       "ai_probability": 0.92,
       "confidence": 0.9,
-      "analysis_ms": 4121,
+      "analysis_ms": 3919,
       "evidence_paths": [
         "provenance_contract"
       ],
@@ -645,7 +647,8 @@
             "trusted": false,
             "limits": "Only digitalSourceType claims inside a C2PA manifest container (PNG caBX, JPEG APP11/JUMBF, WebP C2PA chunk) count. With the optional c2pa-python reader the signature and hard binding are validated and remote manifest fetch is disabled; no trust list is configured, so 'Valid' is not 'Trusted'. Without the reader, claims are unverified. Not a SynthID decoder; not a platform upload pipeline.",
             "png_cabx_chunk": false,
-            "png_cabx_bytes": 0
+            "png_cabx_bytes": 0,
+            "jpeg_jumbf_app11": false
           }
         },
         {

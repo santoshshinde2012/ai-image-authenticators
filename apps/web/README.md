@@ -23,4 +23,8 @@ npm run lint     # oxlint
 
 API contracts live under `/api/v1`. Types in `features/analysis/types.ts` mirror `interfaces/http/schemas.py` (verdict bands, `evidence_paths`, analyzer signal cards).
 
+## Benchmark snapshot
+
+The single-page UI includes a Chart.js chart of local regression fixture scores and a downloadable PNG with the method caveat. Run `uv run python scripts/run_local_benchmark.py` from the repository root to refresh `src/features/analysis/benchmark_summary.json`, then rebuild the web app. The chart describes the recorded outputs of a small local fixture set; it is not an accuracy estimate.
+
 Package name: `ai-image-authenticator-web` (not a leftover `frontend/` app).
