@@ -34,7 +34,7 @@ Industry practice is often **dual-layer** (C2PA + SynthID-class watermarks). We 
 
 ```bash
 git clone https://github.com/santoshshinde2012/ai-image-authenticators.git
-cd ai-image-authenticator
+cd ai-image-authenticators
 cp .env.example .env   # optional
 uv sync --all-groups
 cd apps/web && npm ci && cd ../..
