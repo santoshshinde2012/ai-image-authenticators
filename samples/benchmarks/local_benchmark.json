@@ -1,0 +1,868 @@
+{
+  "benchmark_type": "local_samples_only",
+  "disclaimer": "Measured on repository sample images only. Not a GenImage/NTIRE/public leaderboard result.",
+  "git_sha": "dcfa889514b901e980b33c100ad18f7fc297b614",
+  "weights_version": "1.3",
+  "weights": {
+    "metadata": 0.05,
+    "provenance": 0.1,
+    "labels": 0.14,
+    "ela": 0.09,
+    "fft": 0.1,
+    "dct": 0.07,
+    "noise": 0.07,
+    "srm": 0.11,
+    "bayar": 0.07,
+    "local_corr": 0.09,
+    "texture": 0.07,
+    "screenshot": 0.04
+  },
+  "analyzer_ids": [
+    "metadata",
+    "provenance",
+    "labels",
+    "ela",
+    "fft",
+    "dct",
+    "noise",
+    "srm",
+    "bayar",
+    "local_corr",
+    "texture",
+    "screenshot"
+  ],
+  "analyzer_count": 12,
+  "ran_at_utc": "2026-09-18T07:05:50.151490+00:00",
+  "low_code_sample_found": true,
+  "results": [
+    {
+      "sample": "samples/synthetic-screenshot.png",
+      "filename": "synthetic-screenshot.png",
+      "verdict": "ai_generated",
+      "ai_probability": 0.8889,
+      "confidence": 0.6946,
+      "analysis_ms": 1251,
+      "evidence_paths": [
+        "pixel_forensic",
+        "screenshot_path"
+      ],
+      "screenshot_detected": true,
+      "analyzer_count": 12,
+      "dimensions": [
+        360,
+        640
+      ],
+      "signals": [
+        {
+          "id": "metadata",
+          "name": "Metadata Forensics",
+          "score": 0.58,
+          "confidence": 0.55,
+          "weight": 0.05,
+          "findings": [
+            "Little/no camera EXIF \u2014 common for AI exports and social downloads",
+            "PNG without rich metadata is consistent with generator/screenshot pipelines",
+            "PNG container often strips camera provenance"
+          ],
+          "key_details": {
+            "format": "PNG",
+            "mode": "RGB",
+            "path": "metadata_forensics",
+            "has_exif": false,
+            "has_camera": false,
+            "normalized_score": 0.5566
+          }
+        },
+        {
+          "id": "provenance",
+          "name": "Content Credentials (C2PA)",
+          "score": 0.45,
+          "confidence": 0.4,
+          "weight": 0.01,
+          "findings": [
+            "No C2PA/Content Credentials markers detected \u2014 common after platform re-encode, download, or screenshot; absence is not proof of authenticity",
+            "Fall back to pixel_forensic + OCR paths; this tool is a local examiner, not X's upload-time provenance gate (and X may use undisclosed criteria beyond C2PA)"
+          ],
+          "key_details": {
+            "format": "PNG",
+            "path": "provenance_contract",
+            "crypto_validated": false,
+            "trusted": false,
+            "limits": "Only digitalSourceType claims inside a C2PA manifest container (PNG caBX, JPEG APP11/JUMBF, WebP C2PA chunk) count. With the optional c2pa-python reader the signature and hard binding are validated and remote manifest fetch is disabled; no trust list is configured, so 'Valid' is not 'Trusted'. Without the reader, claims are unverified. Not a SynthID decoder; not a platform upload pipeline.",
+            "png_cabx_chunk": false,
+            "png_cabx_bytes": 0
+          }
+        },
+        {
+          "id": "labels",
+          "name": "Visible AI Labels (OCR)",
+          "score": 0.42,
+          "confidence": 0.45,
+          "weight": 0.03,
+          "findings": [
+            "OCR ran; no known AI disclosure phrases detected in visible text"
+          ],
+          "key_details": {
+            "ocr_chars": 7,
+            "ocr_preview": "O)\n\nO)\n",
+            "ocr_variants": 10,
+            "ocr_available": true,
+            "ocr_agreement_votes": 0
+          }
+        },
+        {
+          "id": "ela",
+          "name": "Error Level Analysis",
+          "score": 0.71,
+          "confidence": 0.68,
+          "weight": 0.09,
+          "findings": [
+            "Patchy ELA (spatial CV=2.95) \u2014 possible composite / mixed sources",
+            "Multi-quality ELA stays low (Q90=0.19, Q75=0.27, \u0394=0.08)"
+          ],
+          "key_details": {
+            "mean_residual": 0.18730035424232483,
+            "mean_residual_q75": 0.267907977104187,
+            "quality_delta": 0.08060762286186218,
+            "max_residual": 43.0,
+            "std_residual": 1.1786277294158936,
+            "spatial_cv": 2.950687429643542,
+            "edge_flat_ratio": 47.17728230822189,
+            "normalized_score": 0.6663
+          }
+        },
+        {
+          "id": "fft",
+          "name": "Frequency Spectrum (FFT)",
+          "score": 0.71,
+          "confidence": 0.6,
+          "weight": 0.1,
+          "findings": [
+            "Mildly reduced high-frequency content (HF/LF=0.61)",
+            "Azimuthal power residual spikes (10% of mid-band bins) \u2014 lattice/upsampler peaks",
+            "Low azimuthal HF power ratio (0.000)"
+          ],
+          "key_details": {
+            "hf_lf_ratio": 0.6065316629598972,
+            "axis_boost": 1.1628695726394653,
+            "mid_band": 8.084525068600973,
+            "mid_notch": 0.11193822469561265,
+            "azimuthal_anisotropy": 0.03714917296562122,
+            "spectral_kurtosis": 2.443572998046875,
+            "log_log_slope": -2.985565554040538,
+            "hf_power_ratio": 2.1633561073690646e-07
+          }
+        },
+        {
+          "id": "dct",
+          "name": "DCT / JPEG Statistics",
+          "score": 0.8,
+          "confidence": 0.67,
+          "weight": 0.07,
+          "findings": [
+            "Moderate Benford deviation (\u03c7\u00b2\u22480.075)",
+            "High fraction of near-zero AC coefficients (98%) \u2014 overly smooth blocks",
+            "Low AC spectral flatness (0.000) \u2014 sparse coefficient energy",
+            "Source was non-JPEG; analyzed via controlled JPEG pass"
+          ],
+          "key_details": {
+            "benford_chi": 0.07481044249484543,
+            "near_zero_ac_frac": 0.9830291005291005,
+            "ac_std": 13.43947696685791,
+            "ac_mean_abs": 0.7160040736198425,
+            "ac_spectral_flatness": 2.217405935951211e-08,
+            "ac_periodicity": -0.0004299407585880568,
+            "via_jpeg_pass": true
+          }
+        },
+        {
+          "id": "noise",
+          "name": "Noise Residual",
+          "score": 0.73,
+          "confidence": 0.63,
+          "weight": 0.07,
+          "findings": [
+            "Below-typical noise energy (mean var=7.08)",
+            "Healthy Laplacian energy (247.0)",
+            "High cross-channel residual correlation (0.97) \u2014 synthetic smoothness",
+            "Inconsistent block noise (CV=5.08) \u2014 possible mixed regions / inpainting"
+          ],
+          "key_details": {
+            "mean_block_variance": 7.077470779418945,
+            "variance_cv": 5.075939156134819,
+            "flat_block_fraction": 0.0,
+            "laplacian_variance": 246.9886474609375,
+            "cross_channel_corr": 0.9652533848117977,
+            "normalized_score": 0.6747
+          }
+        },
+        {
+          "id": "srm",
+          "name": "SRM Residuals",
+          "score": 0.92,
+          "confidence": 0.79,
+          "weight": 0.11,
+          "findings": [
+            "SRM residual energy suppressed (mean|r|=0.54) \u2014 sensor/steganographic noise floor largely missing",
+            "Low residual histogram entropy (0.03) \u2014 quantized noise",
+            "Bayar prediction residual also suppressed (mean|e|=0.48)"
+          ],
+          "key_details": {
+            "mean_abs_residual": 0.5413479662698413,
+            "mean_kurtosis": 365.6313598892953,
+            "mean_hist_entropy": 0.030821423875183572,
+            "cross_filter_energy_cv": 0.4883403277883275,
+            "citation": "Fridrich & Kodovsky SRM; TRIDENT spectral residual path",
+            "normalized_score": 0.8627
+          }
+        },
+        {
+          "id": "bayar",
+          "name": "Bayar Prediction Residual",
+          "score": 0.86,
+          "confidence": 0.78,
+          "weight": 0.07,
+          "findings": [
+            "Very low prediction residual energy (mean|e|=0.48) \u2014 camera prediction-error noise largely absent",
+            "High residual lag-1 correlation (0.75) \u2014 overly smooth prediction errors"
+          ],
+          "key_details": {
+            "mean_abs_residual": 0.47837674617767334,
+            "std_abs_residual": 5.2245192527771,
+            "block_energy_cv": 3.8766513736245383,
+            "lag1_correlation": 0.7480725536380528,
+            "kernel": "bayar_constrained_3x3",
+            "normalized_score": 0.8085
+          }
+        },
+        {
+          "id": "local_corr",
+          "name": "Local Correlation / Upsampling Residue",
+          "score": 0.82,
+          "confidence": 0.7,
+          "weight": 0.09,
+          "findings": [
+            "Extremely high local correlation (0.992) with weak NPR residue (0.47) \u2014 generative smoothness / upsampler footprint",
+            "Strong periodic structure in NPR residue (peak/mean=100.0)"
+          ],
+          "key_details": {
+            "npr_energy_x2": 0.466825395822525,
+            "npr_energy_x4": 0.9040041565895081,
+            "hv_gap": 0.008149731071479649,
+            "diag_bias": -0.004855060946583278,
+            "npr_spectral_peak_ratio": 99.97129821777344,
+            "citation": "NPR / ForenAgent local-correlation upsampling cues",
+            "normalized_score": 0.7576
+          }
+        },
+        {
+          "id": "texture",
+          "name": "Texture & Gradient",
+          "score": 1.0,
+          "confidence": 0.76,
+          "weight": 0.07,
+          "findings": [
+            "Over-smooth gradients (mean=5.1, soft=98%) atypical of camera photos",
+            "Low local entropy (0.04) suggests homogenized regions",
+            "Neighbor pixel differences unusually small (painterly smoothness)",
+            "High GLCM homogeneity (1.00) / low contrast (0.00)"
+          ],
+          "key_details": {
+            "mean_gradient": 5.094839096069336,
+            "soft_fraction": 0.9839409722222222,
+            "local_entropy": 0.03783091108434766,
+            "neighbor_mean_diff": 0.4810773891875799,
+            "grad_peakiness": 0.1586285314440654,
+            "glcm_contrast": 0.0044291338582677165,
+            "glcm_homogeneity": 0.9977854330708662,
+            "laplacian_variance": 246.9886474609375
+          }
+        },
+        {
+          "id": "screenshot",
+          "name": "Screenshot Heuristic",
+          "score": 0.52,
+          "confidence": 0.75,
+          "weight": 0.04,
+          "findings": [
+            "Screenshot-like capture detected: do not treat as a camera photo; embedded illustrations may still be AI-generated",
+            "Distinct top chrome bar vs body (status/nav pattern)",
+            "Large flat UI-like regions (83% of downscaled area)",
+            "Aspect ratio 0.56 common for phone/desktop screenshots",
+            "Low corner color diversity (status/nav bar)"
+          ],
+          "key_details": {
+            "screenshot_likelihood": 0.9999999999999999,
+            "is_screenshot": true,
+            "chrome_cues": 3,
+            "flat_fraction": 0.82745361328125,
+            "border_std": 31.20015024002288,
+            "aspect": 0.5625,
+            "edge_density": 0.004131944444444445,
+            "normalized_score": 0.5168
+          }
+        }
+      ],
+      "summary": "Strong indicators of AI / synthetic imagery (ensemble AI probability 89%). Evidence paths: pixel_forensic, screenshot_path. Image appears screenshot-like; embedded content may still be AI even if UI chrome is real. Key signals: SRM residual energy suppressed (mean|r|=0.54) \u2014 sensor/steganographic noise floor largely missing; Low residual histogram entropy (0.03) \u2014 quantized noise; Bayar prediction residual also suppressed (mean|e|=0.48).",
+      "fusion_reasons": [
+        "provenance_contract: no C2PA markers (typical after re-encode/screenshot) \u2014 not decisive",
+        "pixel_forensic: classical ensemble mean=0.79 (lean_ai=9/9; ELA/FFT/DCT/noise/texture/metadata/SRM/Bayar/local_corr)",
+        "pixel_forensic: agreement boost (+0.08) from 9 AI-leaning signals",
+        "screenshot_path: UI chrome heuristic active; content-region reanalysis may apply",
+        "challenge: laundering_probe \u2014 controlled JPEG Q=75 pass (\u0394=-0.032); surfaced in fusion_reasons for audit",
+        "challenge: overconfidence controls \u2014 confidence floor 0.12 + challenge_flags=['laundering_probe']"
+      ]
+    },
+    {
+      "sample": "samples/synthetic-smooth.png",
+      "filename": "synthetic-smooth.png",
+      "verdict": "ai_generated",
+      "ai_probability": 0.8467,
+      "confidence": 0.7649,
+      "analysis_ms": 946,
+      "evidence_paths": [
+        "pixel_forensic"
+      ],
+      "screenshot_detected": false,
+      "analyzer_count": 12,
+      "dimensions": [
+        256,
+        256
+      ],
+      "signals": [
+        {
+          "id": "metadata",
+          "name": "Metadata Forensics",
+          "score": 0.85,
+          "confidence": 0.9,
+          "weight": 0.05,
+          "findings": [
+            "AI generator fingerprints: Stable Diffusion, Generic AI label",
+            "PNG container often strips camera provenance"
+          ],
+          "key_details": {
+            "format": "PNG",
+            "mode": "RGB",
+            "info_Software": "Stable Diffusion",
+            "info_Comment": "Made with AI",
+            "path": "metadata_forensics",
+            "has_exif": false,
+            "has_camera": false
+          }
+        },
+        {
+          "id": "provenance",
+          "name": "Content Credentials (C2PA)",
+          "score": 0.45,
+          "confidence": 0.4,
+          "weight": 0.01,
+          "findings": [
+            "No C2PA/Content Credentials markers detected \u2014 common after platform re-encode, download, or screenshot; absence is not proof of authenticity",
+            "Fall back to pixel_forensic + OCR paths; this tool is a local examiner, not X's upload-time provenance gate (and X may use undisclosed criteria beyond C2PA)"
+          ],
+          "key_details": {
+            "format": "PNG",
+            "path": "provenance_contract",
+            "crypto_validated": false,
+            "trusted": false,
+            "limits": "Only digitalSourceType claims inside a C2PA manifest container (PNG caBX, JPEG APP11/JUMBF, WebP C2PA chunk) count. With the optional c2pa-python reader the signature and hard binding are validated and remote manifest fetch is disabled; no trust list is configured, so 'Valid' is not 'Trusted'. Without the reader, claims are unverified. Not a SynthID decoder; not a platform upload pipeline.",
+            "png_cabx_chunk": false,
+            "png_cabx_bytes": 0
+          }
+        },
+        {
+          "id": "labels",
+          "name": "Visible AI Labels (OCR)",
+          "score": 0.42,
+          "confidence": 0.45,
+          "weight": 0.03,
+          "findings": [
+            "OCR ran; no known AI disclosure phrases detected in visible text"
+          ],
+          "key_details": {
+            "ocr_chars": 20,
+            "ocr_preview": "a\n\na\n\na\n\n-\n\n-\n\n-\n\na\n",
+            "ocr_variants": 10,
+            "ocr_available": true,
+            "ocr_agreement_votes": 0
+          }
+        },
+        {
+          "id": "ela",
+          "name": "Error Level Analysis",
+          "score": 0.86,
+          "confidence": 0.74,
+          "weight": 0.09,
+          "findings": [
+            "Very low recompression residual (mean=0.56) with uniform ELA \u2014 often seen in generative/smooth imagery",
+            "Multi-quality ELA stays low (Q90=0.56, Q75=0.76, \u0394=0.21)",
+            "Flat vs edge residual ratio low (1.00) \u2014 residual not camera-edge dominated"
+          ],
+          "key_details": {
+            "mean_residual": 0.5565897822380066,
+            "mean_residual_q75": 0.7625630497932434,
+            "quality_delta": 0.20597326755523682,
+            "max_residual": 3.0,
+            "std_residual": 0.5897289514541626,
+            "spatial_cv": 0.02675673223786673,
+            "edge_flat_ratio": 1.0,
+            "normalized_score": 0.7992
+          }
+        },
+        {
+          "id": "fft",
+          "name": "Frequency Spectrum (FFT)",
+          "score": 0.92,
+          "confidence": 0.72,
+          "weight": 0.1,
+          "findings": [
+            "Mildly reduced high-frequency content (HF/LF=0.53)",
+            "Very steep spectral decay (slope=-2.83) with HF loss",
+            "Low azimuthal HF power ratio (0.000)",
+            "Elevated axial spectral peaks (axis boost=5.94) \u2014 possible grid/upsampling artifacts",
+            "Azimuthal anisotropy (0.117) \u2014 directional spectral bias"
+          ],
+          "key_details": {
+            "hf_lf_ratio": 0.5310893815908877,
+            "axis_boost": 5.9417524337768555,
+            "mid_band": 1.9146478462219239,
+            "mid_notch": 0.11472877911605721,
+            "azimuthal_anisotropy": 0.117016169969541,
+            "spectral_kurtosis": 18.657333374023438,
+            "log_log_slope": -2.8267904902202448,
+            "hf_power_ratio": 3.877980458444949e-07
+          }
+        },
+        {
+          "id": "dct",
+          "name": "DCT / JPEG Statistics",
+          "score": 0.52,
+          "confidence": 0.67,
+          "weight": 0.07,
+          "findings": [
+            "AC digits closer to Benford (\u03c7\u00b2\u22480.020)",
+            "High fraction of near-zero AC coefficients (95%) \u2014 overly smooth blocks",
+            "Low AC spectral flatness (0.030) \u2014 sparse coefficient energy",
+            "Source was non-JPEG; analyzed via controlled JPEG pass"
+          ],
+          "key_details": {
+            "benford_chi": 0.01994120960123707,
+            "near_zero_ac_frac": 0.9522259424603174,
+            "ac_std": 1.4953007698059082,
+            "ac_mean_abs": 0.47604304552078247,
+            "ac_spectral_flatness": 0.030107949620285745,
+            "ac_periodicity": 0.007228988578033211,
+            "via_jpeg_pass": true
+          }
+        },
+        {
+          "id": "noise",
+          "name": "Noise Residual",
+          "score": 0.84,
+          "confidence": 0.72,
+          "weight": 0.07,
+          "findings": [
+            "Very low wavelet residual energy (mean var=0.18) \u2014 sensor noise largely absent",
+            "Low Laplacian variance (2.6) \u2014 weak high-frequency grain"
+          ],
+          "key_details": {
+            "mean_block_variance": 0.18416212499141693,
+            "variance_cv": 0.015108873300865786,
+            "flat_block_fraction": 0.0,
+            "laplacian_variance": 2.6371002197265625,
+            "cross_channel_corr": 0.0,
+            "normalized_score": 0.7781
+          }
+        },
+        {
+          "id": "srm",
+          "name": "SRM Residuals",
+          "score": 0.98,
+          "confidence": 0.79,
+          "weight": 0.11,
+          "findings": [
+            "SRM residual energy suppressed (mean|r|=0.54) \u2014 sensor/steganographic noise floor largely missing",
+            "Platykurtic residual distribution (kurt=-0.55)",
+            "Low residual histogram entropy (0.73) \u2014 quantized noise",
+            "Bayar prediction residual also suppressed (mean|e|=0.28)"
+          ],
+          "key_details": {
+            "mean_abs_residual": 0.538224628993443,
+            "mean_kurtosis": -0.5458595160938763,
+            "mean_hist_entropy": 0.7326362857770804,
+            "cross_filter_energy_cv": 0.43969072781142127,
+            "citation": "Fridrich & Kodovsky SRM; TRIDENT spectral residual path",
+            "normalized_score": 0.9145
+          }
+        },
+        {
+          "id": "bayar",
+          "name": "Bayar Prediction Residual",
+          "score": 0.85,
+          "confidence": 0.72,
+          "weight": 0.07,
+          "findings": [
+            "Very low prediction residual energy (mean|e|=0.28) \u2014 camera prediction-error noise largely absent",
+            "Unusually uniform residual energy (CV=0.02) across blocks"
+          ],
+          "key_details": {
+            "mean_abs_residual": 0.28057289123535156,
+            "std_abs_residual": 0.18472562730312347,
+            "block_energy_cv": 0.015495096541793204,
+            "lag1_correlation": -0.3372803838041142,
+            "kernel": "bayar_constrained_3x3",
+            "normalized_score": 0.7863
+          }
+        },
+        {
+          "id": "local_corr",
+          "name": "Local Correlation / Upsampling Residue",
+          "score": 0.82,
+          "confidence": 0.7,
+          "weight": 0.09,
+          "findings": [
+            "Extremely high local correlation (1.000) with weak NPR residue (0.25) \u2014 generative smoothness / upsampler footprint",
+            "Strong periodic structure in NPR residue (peak/mean=435.0)"
+          ],
+          "key_details": {
+            "npr_energy_x2": 0.24816620349884033,
+            "npr_energy_x4": 0.2625446319580078,
+            "hv_gap": 7.030541212649233e-06,
+            "diag_bias": 1.5647768386251037e-05,
+            "npr_spectral_peak_ratio": 435.0076904296875,
+            "citation": "NPR / ForenAgent local-correlation upsampling cues",
+            "normalized_score": 0.7576
+          }
+        },
+        {
+          "id": "texture",
+          "name": "Texture & Gradient",
+          "score": 1.0,
+          "confidence": 0.76,
+          "weight": 0.07,
+          "findings": [
+            "Over-smooth gradients (mean=5.3, soft=100%) atypical of camera photos",
+            "Low local entropy (0.55) suggests homogenized regions",
+            "Neighbor pixel differences unusually small (painterly smoothness)",
+            "High GLCM homogeneity (1.00) / low contrast (0.01)",
+            "Low Laplacian texture energy (2.6)"
+          ],
+          "key_details": {
+            "mean_gradient": 5.266106128692627,
+            "soft_fraction": 1.0,
+            "local_entropy": 0.5472850748622904,
+            "neighbor_mean_diff": 0.5150098425196851,
+            "grad_peakiness": 0.1325927734375,
+            "glcm_contrast": 0.009165846456692913,
+            "glcm_homogeneity": 0.9954170767716535,
+            "laplacian_variance": 2.6371002197265625
+          }
+        },
+        {
+          "id": "screenshot",
+          "name": "Screenshot Heuristic",
+          "score": 0.45,
+          "confidence": 0.5,
+          "weight": 0.04,
+          "findings": [
+            "Distinct top chrome bar vs body (status/nav pattern)",
+            "Large flat UI-like regions (100% of downscaled area)",
+            "Many near-constant scanlines \u2014 UI / text background pattern",
+            "No strong screenshot/UI chrome signals"
+          ],
+          "key_details": {
+            "screenshot_likelihood": 0.6,
+            "is_screenshot": false,
+            "chrome_cues": 1,
+            "flat_fraction": 1.0,
+            "border_std": 32.76347081957947,
+            "aspect": 1.0,
+            "edge_density": 0.0,
+            "normalized_score": 0.4662
+          }
+        }
+      ],
+      "summary": "Strong indicators of AI / synthetic imagery (ensemble AI probability 85%). Evidence paths: pixel_forensic. Key signals: SRM residual energy suppressed (mean|r|=0.54) \u2014 sensor/steganographic noise floor largely missing; Platykurtic residual distribution (kurt=-0.55); Low residual histogram entropy (0.73) \u2014 quantized noise.",
+      "fusion_reasons": [
+        "provenance_contract: no C2PA markers (typical after re-encode/screenshot) \u2014 not decisive",
+        "pixel_forensic: classical ensemble mean=0.85 (lean_ai=8/9; ELA/FFT/DCT/noise/texture/metadata/SRM/Bayar/local_corr)",
+        "pixel_forensic: agreement boost (+0.08) from 8 AI-leaning signals",
+        "challenge: laundering_probe \u2014 controlled JPEG Q=75 pass (\u0394=+0.013); surfaced in fusion_reasons for audit",
+        "challenge: overconfidence controls \u2014 confidence floor 0.12 + challenge_flags=['laundering_probe']"
+      ]
+    },
+    {
+      "sample": "ai-image-authenticator-samples/low-code-illusion-sample.png",
+      "filename": "low-code-illusion-sample.png",
+      "verdict": "ai_generated",
+      "ai_probability": 0.92,
+      "confidence": 0.9,
+      "analysis_ms": 4121,
+      "evidence_paths": [
+        "provenance_contract"
+      ],
+      "screenshot_detected": false,
+      "analyzer_count": 12,
+      "dimensions": [
+        1242,
+        882
+      ],
+      "signals": [
+        {
+          "id": "metadata",
+          "name": "Metadata Forensics",
+          "score": 0.4,
+          "confidence": 0.5,
+          "weight": 0.05,
+          "findings": [
+            "EXIF present but no known camera make/model"
+          ],
+          "key_details": {
+            "format": "PNG",
+            "mode": "RGBA",
+            "Make": "",
+            "Model": "",
+            "Software": "",
+            "info_icc_profile": "\u0000\u0000\u0002\u0018appl\u0004\u0000\u0000\u0000mntrRGB XYZ \u0007\u0000\u0001\u0000\u0001\u0000\u0000\u0000\u0000\u0000\u0000acspAPPL\u0000\u0000\u0000\u0000APPL\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000-appl\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\ndesc\u0000\u0000\u0000\u0000\u0000\u00000cprt\u0000\u0000\u0001,\u0000\u0000\u0000Pwtpt\u0000\u0000\u0001|\u0000\u0000\u0000\u0014rXYZ\u0000\u0000\u0001\u0000\u0000\u0000\u0014gXYZ\u0000\u0000\u0001\u0000\u0000\u0000\u0014bXYZ\u0000\u0000\u0001\u0000\u0000\u0000\u0014rTRC\u0000\u0000\u0001\u0000\u0000\u0000 chad\u0000\u0000\u0001\u0000\u0000\u0000,bTRC\u0000\u0000\u0001\u0000\u0000\u0000 gTRC\u0000\u0000\u0001\u0000\u0000\u0000 mluc\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\fenUS\u0000\u0000\u0000\u0014\u0000\u0000\u0000\u001c\u0000D\u0000i\u0000s\u0000p\u0000l\u0000a\u0000y\u0000 \u0000P\u00003mluc\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\fenUS\u0000\u0000\u00004\u0000\u0000\u0000\u001c\u0000C\u0000o\u0000p\u0000y\u0000r\u0000i\u0000g\u0000h\u0000t\u0000 \u0000A\u0000p\u0000p\u0000l\u0000e\u0000 \u0000I\u0000n\u0000c\u0000.\u0000,\u0000 \u00002\u00000\u00002\u00002XYZ \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000,XYZ \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000=XYZ \u0000\u0000\u0000\u0000\u0000\u0000J\u0000\u00007\u0000\u0000\nXYZ \u0000\u0000\u0000\u0000\u0000\u0000(8\u0000\u0000\u0011\u000b\u0000\u0000\u0239para\u0000\u0000\u0000\u0000\u0000\u0003\u0000\u0000\u0000\u0002ff\u0000\u0000\u0000\u0000\rY\u0000\u0000\u0013\u0000\u0000\n[sf32\u0000\u0000\u0000\u0000\u0000\u0001\fB\u0000\u0000\u0005&\u0000\u0000\u0007\u0000\u0000\u0000\u0000\u0003\u0000\u0000n",
+            "info_exif": "Exif\u0000\u0000MM\u0000*\u0000\u0000\u0000\b\u0000\u0005\u0001\u0012\u0000\u0003\u0000\u0000\u0000\u0001\u0000\u0001\u0000\u0000\u0001\u001a\u0000\u0005\u0000\u0000\u0000\u0001\u0000\u0000\u0000J\u0001\u001b\u0000\u0005\u0000\u0000\u0000\u0001\u0000\u0000\u0000R\u0001(\u0000\u0003\u0000\u0000\u0000\u0001\u0000\u0002\u0000\u0000i\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0000Z\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0003\u0000\u0007\u0000\u0000\u0000\u0012\u0000\u0000\u0000\u0002\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0004\u06a0\u0003\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0003r\u0000\u0000\u0000\u0000ASCII\u0000\u0000\u0000Screenshot",
+            "info_xmp": "<x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"XMP Core 6.0.0\">\n   <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">\n      <rdf:Description rdf:about=\"\"\n            xmlns:exif=\"http://ns.adobe.com/exif/1.0/\"\n            xmlns:tiff=\"http://ns.adobe.com/tiff/1.0/\">\n         <exif:UserComment>Screenshot</exif:UserComment>\n         <exif:PixelXDimension>1242</exif:PixelXDimension>\n         <exif:PixelYDimension>882</exif:PixelYDimension>\n         <tiff:ResolutionUnit>2</tiff:Resolution"
+          }
+        },
+        {
+          "id": "provenance",
+          "name": "Content Credentials (C2PA)",
+          "score": 0.45,
+          "confidence": 0.4,
+          "weight": 0.01,
+          "findings": [
+            "No C2PA/Content Credentials markers detected \u2014 common after platform re-encode, download, or screenshot; absence is not proof of authenticity",
+            "Fall back to pixel_forensic + OCR paths; this tool is a local examiner, not X's upload-time provenance gate (and X may use undisclosed criteria beyond C2PA)"
+          ],
+          "key_details": {
+            "format": "PNG",
+            "path": "provenance_contract",
+            "crypto_validated": false,
+            "trusted": false,
+            "limits": "Only digitalSourceType claims inside a C2PA manifest container (PNG caBX, JPEG APP11/JUMBF, WebP C2PA chunk) count. With the optional c2pa-python reader the signature and hard binding are validated and remote manifest fetch is disabled; no trust list is configured, so 'Valid' is not 'Trusted'. Without the reader, claims are unverified. Not a SynthID decoder; not a platform upload pipeline.",
+            "png_cabx_chunk": false,
+            "png_cabx_bytes": 0
+          }
+        },
+        {
+          "id": "labels",
+          "name": "Visible AI Labels (OCR)",
+          "score": 0.8915,
+          "confidence": 0.97,
+          "weight": 0.14,
+          "findings": [
+            "Visible AI disclosure / generator text in pixels: Made with AI",
+            "OCR disclosure confidence\u224897% (Al/A1-hardened; matched in 14 OCR lines)",
+            "A visible disclosure in the raster is strong evidence of AI involvement"
+          ],
+          "key_details": {
+            "ocr_chars": 3351,
+            "ocr_preview": "dd Santosh Shinde @ @sanshinde2@12 - 10h (Jou\nThe Low-Code Illusion\nmedium.com/@santosh-shind...\nSQ\n. NN Za SN YS Fae NE ESS ON |\n_ i ee ANS See\n1. Open the portal 2. Draw the rest of the platform\n> Made with Al\n\n_\n\n10h\n\ng\n\n\u201c Santosh Shinde @ @sanshinde2Q12 -\n\n\u00a5\n\nThe Low-Code Illusion\n\nmedium.com/@santosh-shind...\n\n7)\n\nSee\n\nYe\n\nved\n\ny)\n\n)\n\n\\\\\n\n\u00ab\n\nyo\n\n1. Open the portal\n\n2. Draw the rest of +6 \u201ceNea\n\n> Made with Al\n\nee\n-\\ Santosh Shinde @ @sanshinde2@12 - 10h Jou\n\u2018 The Low-Code Illusion\nmedium.com/@santosh-shind...\n\u2014\u2014\n\\ / Pe 8 Rey Nea ZN rs\nNe as } 4 ~~ NS AD SR\n\u00ab Sa ee Sy\n\u00e9 A hia \u00ae + at SN\n4. Open the portal 2. Draw the rest of the platform\n> Made with Al\n\n~\n\n12 -10h\n\n-\\ Santosh Shinde @ @sanshinde2@\n\nThe Low-Code Illusion\n\nay\n\nmedium.com/@santosh-shind...\n\n#-\n\nJ\n\niN\n\nSey\n\nan\n\nAwe\n\nrah\n\n|\n",
+            "ocr_variants": 10,
+            "ocr_available": true,
+            "ocr_agreement_votes": 14
+          }
+        },
+        {
+          "id": "ela",
+          "name": "Error Level Analysis",
+          "score": 0.52,
+          "confidence": 0.61,
+          "weight": 0.09,
+          "findings": [
+            "ELA residual mean=0.96, max=67.0, spatial CV=1.05",
+            "Multi-quality ELA stays low (Q90=0.96, Q75=1.59, \u0394=0.63)"
+          ],
+          "key_details": {
+            "mean_residual": 0.9569833278656006,
+            "mean_residual_q75": 1.58707857131958,
+            "quality_delta": 0.6300952434539795,
+            "max_residual": 67.0,
+            "std_residual": 1.9601037502288818,
+            "spatial_cv": 1.0496587595392772,
+            "edge_flat_ratio": 4.03320628862397,
+            "normalized_score": 0.5149
+          }
+        },
+        {
+          "id": "fft",
+          "name": "Frequency Spectrum (FFT)",
+          "score": 0.3,
+          "confidence": 0.55,
+          "weight": 0.1,
+          "findings": [
+            "Healthy high-frequency content (HF/LF=0.72)"
+          ],
+          "key_details": {
+            "hf_lf_ratio": 0.7157805644377755,
+            "axis_boost": 1.0752382278442383,
+            "mid_band": 10.224433637645147,
+            "mid_notch": 0.0536347689910327,
+            "azimuthal_anisotropy": 0.0233681572569908,
+            "spectral_kurtosis": 0.33979129791259766,
+            "log_log_slope": -2.040770375023625,
+            "hf_power_ratio": 2.777011781402423e-07
+          }
+        },
+        {
+          "id": "dct",
+          "name": "DCT / JPEG Statistics",
+          "score": 0.52,
+          "confidence": 0.67,
+          "weight": 0.07,
+          "findings": [
+            "AC digits closer to Benford (\u03c7\u00b2\u22480.015)",
+            "High fraction of near-zero AC coefficients (79%) \u2014 overly smooth blocks",
+            "Low AC spectral flatness (0.000) \u2014 sparse coefficient energy",
+            "Source was non-JPEG; analyzed via controlled JPEG pass"
+          ],
+          "key_details": {
+            "benford_chi": 0.014543628549359448,
+            "near_zero_ac_frac": 0.7886953392468098,
+            "ac_std": 24.795867919921875,
+            "ac_mean_abs": 6.167842388153076,
+            "ac_spectral_flatness": 2.3995607804322124e-05,
+            "ac_periodicity": 0.010737751670109128,
+            "via_jpeg_pass": true
+          }
+        },
+        {
+          "id": "noise",
+          "name": "Noise Residual",
+          "score": 0.3,
+          "confidence": 0.55,
+          "weight": 0.07,
+          "findings": [
+            "Present residual noise (mean var=126.79)",
+            "Healthy Laplacian energy (1081.6)",
+            "Inconsistent block noise (CV=2.38) \u2014 possible mixed regions / inpainting"
+          ],
+          "key_details": {
+            "mean_block_variance": 126.7894287109375,
+            "variance_cv": 2.380190929363223,
+            "flat_block_fraction": 0.0875,
+            "laplacian_variance": 1081.605224609375,
+            "cross_channel_corr": 0.9809867859955816,
+            "normalized_score": 0.3585
+          }
+        },
+        {
+          "id": "srm",
+          "name": "SRM Residuals",
+          "score": 0.33,
+          "confidence": 0.63,
+          "weight": 0.11,
+          "findings": [
+            "Present SRM residual energy (mean|r|=6.85)",
+            "Low residual histogram entropy (1.66) \u2014 quantized noise"
+          ],
+          "key_details": {
+            "mean_abs_residual": 6.85215480424746,
+            "mean_kurtosis": 27.38081220197617,
+            "mean_hist_entropy": 1.6577684974980305,
+            "cross_filter_energy_cv": 0.19786717115872174,
+            "citation": "Fridrich & Kodovsky SRM; TRIDENT spectral residual path",
+            "normalized_score": 0.3709
+          }
+        },
+        {
+          "id": "bayar",
+          "name": "Bayar Prediction Residual",
+          "score": 0.65,
+          "confidence": 0.55,
+          "weight": 0.07,
+          "findings": [
+            "Below-typical prediction residual energy (mean|e|=3.70)",
+            "Spatially inconsistent residual energy (CV=1.74) \u2014 possible mixed regions"
+          ],
+          "key_details": {
+            "mean_abs_residual": 3.6969149112701416,
+            "std_abs_residual": 9.94895076751709,
+            "block_energy_cv": 1.7408220379454715,
+            "lag1_correlation": 0.24610215887448275,
+            "kernel": "bayar_constrained_3x3",
+            "normalized_score": 0.6061
+          }
+        },
+        {
+          "id": "local_corr",
+          "name": "Local Correlation / Upsampling Residue",
+          "score": 0.4,
+          "confidence": 0.55,
+          "weight": 0.09,
+          "findings": [
+            "Local correlation mean=0.925; NPR energy=3.22",
+            "Diagonal correlation bias (-0.040) with periodic NPR peaks (peak/mean=98.4) \u2014 upsampling lattice cue"
+          ],
+          "key_details": {
+            "npr_energy_x2": 3.219391345977783,
+            "npr_energy_x4": 6.09658145904541,
+            "hv_gap": 0.016078054603172687,
+            "diag_bias": -0.04044055942675007,
+            "npr_spectral_peak_ratio": 98.35012817382812,
+            "citation": "NPR / ForenAgent local-correlation upsampling cues",
+            "normalized_score": 0.4293
+          }
+        },
+        {
+          "id": "texture",
+          "name": "Texture & Gradient",
+          "score": 0.42,
+          "confidence": 0.61,
+          "weight": 0.07,
+          "findings": [
+            "Strong natural-like gradient energy (mean=47.6)",
+            "Low local entropy (0.82) suggests homogenized regions",
+            "High GLCM homogeneity (0.95) / low contrast (0.15)"
+          ],
+          "key_details": {
+            "mean_gradient": 47.60911178588867,
+            "soft_fraction": 0.7383349810866575,
+            "local_entropy": 0.8220722805922933,
+            "neighbor_mean_diff": 5.9583797827113845,
+            "grad_peakiness": 0.12579745612622767,
+            "glcm_contrast": 0.14776082677165353,
+            "glcm_homogeneity": 0.9493264025590551,
+            "laplacian_variance": 1082.337158203125
+          }
+        },
+        {
+          "id": "screenshot",
+          "name": "Screenshot Heuristic",
+          "score": 0.45,
+          "confidence": 0.5,
+          "weight": 0.04,
+          "findings": [
+            "Uniform borders (std=6.5) suggest UI chrome / capture",
+            "Large flat UI-like regions (45% of downscaled area)",
+            "Low corner color diversity (status/nav bar)",
+            "Many near-constant scanlines \u2014 UI / text background pattern",
+            "No strong screenshot/UI chrome signals"
+          ],
+          "key_details": {
+            "screenshot_likelihood": 0.75,
+            "is_screenshot": false,
+            "chrome_cues": 0,
+            "flat_fraction": 0.44775390625,
+            "border_std": 6.504245487122153,
+            "aspect": 1.4081632653061225,
+            "edge_density": 0.06725400842033002,
+            "normalized_score": 0.4662
+          }
+        }
+      ],
+      "summary": "Strong indicators of AI / synthetic imagery (ensemble AI probability 92%). Evidence paths: provenance_contract. Key signals: Visible AI disclosure / generator text in pixels: Made with AI; OCR disclosure confidence\u224897% (Al/A1-hardened; matched in 14 OCR lines); A visible disclosure in the raster is strong evidence of AI involvement.",
+      "fusion_reasons": [
+        "provenance_contract: no C2PA markers (typical after re-encode/screenshot) \u2014 not decisive",
+        "provenance_contract: visible Made-with-AI / generator disclosure via OCR (pixel badge)",
+        "pixel_forensic: classical ensemble mean=0.43 (lean_ai=1/9; ELA/FFT/DCT/noise/texture/metadata/SRM/Bayar/local_corr)",
+        "challenge: laundering_probe \u2014 controlled JPEG Q=75 pass (\u0394=+0.000); surfaced in fusion_reasons for audit",
+        "challenge: overconfidence controls \u2014 confidence floor 0.12 + challenge_flags=['laundering_probe']"
+      ]
+    }
+  ]
+}

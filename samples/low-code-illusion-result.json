@@ -1,0 +1,437 @@
+{
+  "sample": "ai-image-authenticator-samples/low-code-illusion-sample.png",
+  "source": "scripts/run_local_benchmark.py",
+  "weights_version": "1.3",
+  "verdict": "ai_generated",
+  "ai_probability": 0.92,
+  "confidence": 0.9,
+  "evidence_paths": [
+    "provenance_contract"
+  ],
+  "challenge_flags": [
+    "laundering_probe"
+  ],
+  "failure_modes": [
+    "No universal detector: unseen generators and post-processing can evade classical cues.",
+    "Proprietary SynthID-class watermarks are not decoded without provider keys.",
+    "Classical SRM/FFT/Bayar witnesses weaken under heavy re-encode and modern generators.",
+    "Controlled JPEG Q=75 probe ran; forensic lean may have shifted under recompression."
+  ],
+  "screenshot_detected": false,
+  "analysis_ms": 4097,
+  "fusion_reasons": [
+    "provenance_contract: no C2PA markers (typical after re-encode/screenshot) — not decisive",
+    "provenance_contract: visible Made-with-AI / generator disclosure via OCR (pixel badge)",
+    "pixel_forensic: classical ensemble mean=0.43 (lean_ai=1/9; ELA/FFT/DCT/noise/texture/metadata/SRM/Bayar/local_corr)",
+    "challenge: laundering_probe — controlled JPEG Q=75 pass (Δ=+0.000); surfaced in fusion_reasons for audit",
+    "challenge: overconfidence controls — confidence floor 0.12 + challenge_flags=['laundering_probe']"
+  ],
+  "summary": "Strong indicators of AI / synthetic imagery (ensemble AI probability 92%). Evidence paths: provenance_contract. Key signals: Visible AI disclosure / generator text in pixels: Made with AI; OCR disclosure confidence≈97% (Al/A1-hardened; matched in 14 OCR lines); A visible disclosure in the raster is strong evidence of AI involvement.",
+  "signals": [
+    {
+      "id": "metadata",
+      "name": "Metadata Forensics",
+      "score": 0.4,
+      "confidence": 0.5,
+      "weight": 0.05,
+      "findings": [
+        "EXIF present but no known camera make/model"
+      ],
+      "viz_url": null,
+      "details": {
+        "format": "PNG",
+        "mode": "RGBA",
+        "Make": "",
+        "Model": "",
+        "Software": "",
+        "info_icc_profile": "\u0000\u0000\u0002\u0018appl\u0004\u0000\u0000\u0000mntrRGB XYZ \u0007\u0000\u0001\u0000\u0001\u0000\u0000\u0000\u0000\u0000\u0000acspAPPL\u0000\u0000\u0000\u0000APPL\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000-appl\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\ndesc\u0000\u0000\u0000\u0000\u0000\u00000cprt\u0000\u0000\u0001,\u0000\u0000\u0000Pwtpt\u0000\u0000\u0001|\u0000\u0000\u0000\u0014rXYZ\u0000\u0000\u0001\u0000\u0000\u0000\u0014gXYZ\u0000\u0000\u0001\u0000\u0000\u0000\u0014bXYZ\u0000\u0000\u0001\u0000\u0000\u0000\u0014rTRC\u0000\u0000\u0001\u0000\u0000\u0000 chad\u0000\u0000\u0001\u0000\u0000\u0000,bTRC\u0000\u0000\u0001\u0000\u0000\u0000 gTRC\u0000\u0000\u0001\u0000\u0000\u0000 mluc\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\fenUS\u0000\u0000\u0000\u0014\u0000\u0000\u0000\u001c\u0000D\u0000i\u0000s\u0000p\u0000l\u0000a\u0000y\u0000 \u0000P\u00003mluc\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\fenUS\u0000\u0000\u00004\u0000\u0000\u0000\u001c\u0000C\u0000o\u0000p\u0000y\u0000r\u0000i\u0000g\u0000h\u0000t\u0000 \u0000A\u0000p\u0000p\u0000l\u0000e\u0000 \u0000I\u0000n\u0000c\u0000.\u0000,\u0000 \u00002\u00000\u00002\u00002XYZ \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000,XYZ \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000=XYZ \u0000\u0000\u0000\u0000\u0000\u0000J\u0000\u00007\u0000\u0000\nXYZ \u0000\u0000\u0000\u0000\u0000\u0000(8\u0000\u0000\u0011\u000b\u0000\u0000ȹpara\u0000\u0000\u0000\u0000\u0000\u0003\u0000\u0000\u0000\u0002ff\u0000\u0000\u0000\u0000\rY\u0000\u0000\u0013\u0000\u0000\n[sf32\u0000\u0000\u0000\u0000\u0000\u0001\fB\u0000\u0000\u0005&\u0000\u0000\u0007\u0000\u0000\u0000\u0000\u0003\u0000\u0000n",
+        "info_exif": "Exif\u0000\u0000MM\u0000*\u0000\u0000\u0000\b\u0000\u0005\u0001\u0012\u0000\u0003\u0000\u0000\u0000\u0001\u0000\u0001\u0000\u0000\u0001\u001a\u0000\u0005\u0000\u0000\u0000\u0001\u0000\u0000\u0000J\u0001\u001b\u0000\u0005\u0000\u0000\u0000\u0001\u0000\u0000\u0000R\u0001(\u0000\u0003\u0000\u0000\u0000\u0001\u0000\u0002\u0000\u0000i\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0000Z\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0003\u0000\u0007\u0000\u0000\u0000\u0012\u0000\u0000\u0000\u0002\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0004ڠ\u0003\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0003r\u0000\u0000\u0000\u0000ASCII\u0000\u0000\u0000Screenshot",
+        "info_xmp": "<x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"XMP Core 6.0.0\">\n   <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">\n      <rdf:Description rdf:about=\"\"\n            xmlns:exif=\"http://ns.adobe.com/exif/1.0/\"\n            xmlns:tiff=\"http://ns.adobe.com/tiff/1.0/\">\n         <exif:UserComment>Screenshot</exif:UserComment>\n         <exif:PixelXDimension>1242</exif:PixelXDimension>\n         <exif:PixelYDimension>882</exif:PixelYDimension>\n         <tiff:ResolutionUnit>2</tiff:Resolution",
+        "info_XML:com.adobe.xmp": "<x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"XMP Core 6.0.0\">\n   <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">\n      <rdf:Description rdf:about=\"\"\n            xmlns:exif=\"http://ns.adobe.com/exif/1.0/\"\n            xmlns:tiff=\"http://ns.adobe.com/tiff/1.0/\">\n         <exif:UserComment>Screenshot</exif:UserComment>\n         <exif:PixelXDimension>1242</exif:PixelXDimension>\n         <exif:PixelYDimension>882</exif:PixelYDimension>\n         <tiff:ResolutionUnit>2</tiff:Resolution",
+        "path": "metadata_forensics",
+        "ai_hits": [],
+        "has_exif": true,
+        "has_camera": false,
+        "normalized_score": 0.4325
+      }
+    },
+    {
+      "id": "provenance",
+      "name": "Content Credentials (C2PA)",
+      "score": 0.45,
+      "confidence": 0.4,
+      "weight": 0.01,
+      "findings": [
+        "No C2PA/Content Credentials markers detected — common after platform re-encode, download, or screenshot; absence is not proof of authenticity",
+        "Fall back to pixel_forensic + OCR paths; this tool is a local examiner, not X's upload-time provenance gate (and X may use undisclosed criteria beyond C2PA)"
+      ],
+      "viz_url": null,
+      "details": {
+        "format": "PNG",
+        "path": "provenance_contract",
+        "crypto_validated": false,
+        "trusted": false,
+        "limits": "Only digitalSourceType claims inside a C2PA manifest container (PNG caBX, JPEG APP11/JUMBF, WebP C2PA chunk) count. With the optional c2pa-python reader the signature and hard binding are validated and remote manifest fetch is disabled; no trust list is configured, so 'Valid' is not 'Trusted'. Without the reader, claims are unverified. Not a SynthID decoder; not a platform upload pipeline.",
+        "c2pa_library": {
+          "library": "c2pa",
+          "parsed": false,
+          "remote_manifest_fetch": false,
+          "manifest_found": false
+        },
+        "png_cabx_chunk": false,
+        "png_cabx_bytes": 0,
+        "jpeg_jumbf_app11": false,
+        "jpeg_jumbf_segments": 0,
+        "webp_c2pa_chunk": false,
+        "raw_markers": {},
+        "manifest_present": false,
+        "ai_digital_source_types": [],
+        "possibly_ai_source_types": [],
+        "unverified_source_types": [],
+        "unbound_source_type_strings": [],
+        "declared_source_types": [],
+        "action_labels": [],
+        "claim_generators": [],
+        "claim_hint": false,
+        "soft_binding_hint": false,
+        "assertion_richness": 0,
+        "normalized_score": 0.4695
+      }
+    },
+    {
+      "id": "labels",
+      "name": "Visible AI Labels (OCR)",
+      "score": 0.8915,
+      "confidence": 0.97,
+      "weight": 0.14,
+      "findings": [
+        "Visible AI disclosure / generator text in pixels: Made with AI",
+        "OCR disclosure confidence≈97% (Al/A1-hardened; matched in 14 OCR lines)",
+        "A visible disclosure in the raster is strong evidence of AI involvement"
+      ],
+      "viz_url": null,
+      "details": {
+        "ocr_chars": 3351,
+        "ocr_preview": "dd Santosh Shinde @ @sanshinde2@12 - 10h (Jou\nThe Low-Code Illusion\nmedium.com/@santosh-shind...\nSQ\n. NN Za SN YS Fae NE ESS ON |\n_ i ee ANS See\n1. Open the portal 2. Draw the rest of the platform\n> Made with Al\n\n_\n\n10h\n\ng\n\n“ Santosh Shinde @ @sanshinde2Q12 -\n\n¥\n\nThe Low-Code Illusion\n\nmedium.com/@santosh-shind...\n\n7)\n\nSee\n\nYe\n\nved\n\ny)\n\n)\n\n\\\\\n\n«\n\nyo\n\n1. Open the portal\n\n2. Draw the rest of +6 “eNea\n\n> Made with Al\n\nee\n-\\ Santosh Shinde @ @sanshinde2@12 - 10h Jou\n‘ The Low-Code Illusion\nmedium.com/@santosh-shind...\n——\n\\ / Pe 8 Rey Nea ZN rs\nNe as } 4 ~~ NS AD SR\n« Sa ee Sy\né A hia ® + at SN\n4. Open the portal 2. Draw the rest of the platform\n> Made with Al\n\n~\n\n12 -10h\n\n-\\ Santosh Shinde @ @sanshinde2@\n\nThe Low-Code Illusion\n\nay\n\nmedium.com/@santosh-shind...\n\n#-\n\nJ\n\niN\n\nSey\n\nan\n\nAwe\n\nrah\n\n|\n",
+        "ocr_variants": 10,
+        "ai_label_hits": [
+          "Made with AI"
+        ],
+        "hit_confidences": {
+          "Made with AI": 0.98
+        },
+        "provenance_badge_hits": [],
+        "ocr_available": true,
+        "ocr_agreement_votes": 14,
+        "normalized_score": 0.8839
+      }
+    },
+    {
+      "id": "ela",
+      "name": "Error Level Analysis",
+      "score": 0.52,
+      "confidence": 0.61,
+      "weight": 0.09,
+      "findings": [
+        "ELA residual mean=0.96, max=67.0, spatial CV=1.05",
+        "Multi-quality ELA stays low (Q90=0.96, Q75=1.59, Δ=0.63)"
+      ],
+      "viz_url": "/api/v1/artifacts/<id>",
+      "details": {
+        "mean_residual": 0.9569833278656006,
+        "mean_residual_q75": 1.58707857131958,
+        "quality_delta": 0.6300952434539795,
+        "max_residual": 67.0,
+        "std_residual": 1.9601037502288818,
+        "spatial_cv": 1.0496587595392772,
+        "edge_flat_ratio": 4.03320628862397,
+        "normalized_score": 0.5149
+      }
+    },
+    {
+      "id": "fft",
+      "name": "Frequency Spectrum (FFT)",
+      "score": 0.3,
+      "confidence": 0.55,
+      "weight": 0.1,
+      "findings": [
+        "Healthy high-frequency content (HF/LF=0.72)"
+      ],
+      "viz_url": "/api/v1/artifacts/<id>",
+      "details": {
+        "hf_lf_ratio": 0.7157805644377755,
+        "axis_boost": 1.0752382278442383,
+        "mid_band": 10.224433637645147,
+        "mid_notch": 0.0536347689910327,
+        "azimuthal_anisotropy": 0.0233681572569908,
+        "spectral_kurtosis": 0.33979129791259766,
+        "log_log_slope": -2.040770375023625,
+        "hf_power_ratio": 2.777011781402423e-07,
+        "azimuthal_spike_fraction": 0.0,
+        "azimuthal_avg_power_ds": [
+          3.029650388497203e+16,
+          188395113280.0,
+          93913705477.17647,
+          27017169721.807693,
+          11424002655.231884,
+          6931912561.914893,
+          6117770016.1,
+          3190385571.534274,
+          2623301308.5419846,
+          2308925081.6182065,
+          2384736041.4200583,
+          1657768883.982337,
+          1637568586.4626737,
+          1384364070.2382464,
+          1309123651.05125,
+          839708158.1948886,
+          690173717.3945594,
+          611471630.1004293,
+          583267312.6222222,
+          485282485.81704134,
+          319651001.510522,
+          348899903.3865885,
+          226092616.6930717,
+          199584848.52507657,
+          176508494.96447515,
+          140002879.58991003,
+          150985403.44606984,
+          100105654.00853717,
+          84700362.08130604,
+          70986877.93741764,
+          64103200.31151876,
+          60048704.27273312
+        ],
+        "citation": "Durall CVPR 2020; aidetect-style classical spectrum features",
+        "normalized_score": 0.3585
+      }
+    },
+    {
+      "id": "dct",
+      "name": "DCT / JPEG Statistics",
+      "score": 0.52,
+      "confidence": 0.67,
+      "weight": 0.07,
+      "findings": [
+        "AC digits closer to Benford (χ²≈0.015)",
+        "High fraction of near-zero AC coefficients (79%) — overly smooth blocks",
+        "Low AC spectral flatness (0.000) — sparse coefficient energy",
+        "Source was non-JPEG; analyzed via controlled JPEG pass"
+      ],
+      "viz_url": null,
+      "details": {
+        "benford_chi": 0.014543628549359448,
+        "near_zero_ac_frac": 0.7886953392468098,
+        "ac_std": 24.795867919921875,
+        "ac_mean_abs": 6.167842388153076,
+        "ac_spectral_flatness": 2.3995607804322124e-05,
+        "ac_periodicity": 0.010737751670109128,
+        "via_jpeg_pass": true,
+        "digit_hist": [
+          0.32286771369577605,
+          0.19622452888361533,
+          0.1363317855240907,
+          0.0904907832163912,
+          0.06378873805275008,
+          0.05550624573729598,
+          0.04336513038034998,
+          0.04581764502536601,
+          0.04560742948436464
+        ],
+        "normalized_score": 0.5157
+      }
+    },
+    {
+      "id": "noise",
+      "name": "Noise Residual",
+      "score": 0.3,
+      "confidence": 0.55,
+      "weight": 0.07,
+      "findings": [
+        "Present residual noise (mean var=126.79)",
+        "Healthy Laplacian energy (1081.6)",
+        "Inconsistent block noise (CV=2.38) — possible mixed regions / inpainting"
+      ],
+      "viz_url": "/api/v1/artifacts/<id>",
+      "details": {
+        "mean_block_variance": 126.7894287109375,
+        "variance_cv": 2.380190929363223,
+        "flat_block_fraction": 0.0875,
+        "laplacian_variance": 1081.605224609375,
+        "cross_channel_corr": 0.9809867859955816,
+        "normalized_score": 0.3585
+      }
+    },
+    {
+      "id": "srm",
+      "name": "SRM Residuals",
+      "score": 0.33,
+      "confidence": 0.63,
+      "weight": 0.11,
+      "findings": [
+        "Present SRM residual energy (mean|r|=6.85)",
+        "Low residual histogram entropy (1.66) — quantized noise"
+      ],
+      "viz_url": "/api/v1/artifacts/<id>",
+      "details": {
+        "mean_abs_residual": 6.85215480424746,
+        "mean_kurtosis": 27.38081220197617,
+        "mean_hist_entropy": 1.6577684974980305,
+        "cross_filter_energy_cv": 0.19786717115872174,
+        "per_filter": {
+          "spam_h": {
+            "mean_abs": 6.189055112227285,
+            "variance": 401.2642936072359,
+            "kurtosis": 28.894603733898826,
+            "hist_entropy": 1.5686773062098394
+          },
+          "spam_v": {
+            "mean_abs": 5.408315859250268,
+            "variance": 304.93873826519115,
+            "kurtosis": 32.53427952832817,
+            "hist_entropy": 1.56936492616531
+          },
+          "spam_d1": {
+            "mean_abs": 7.744858324784922,
+            "variance": 569.408013431189,
+            "kurtosis": 25.039034872105308,
+            "hist_entropy": 1.7384223098741196
+          },
+          "spam_d2": {
+            "mean_abs": 8.065443270182413,
+            "variance": 609.8597459381022,
+            "kurtosis": 22.89108762759516,
+            "hist_entropy": 1.715614949591184
+          },
+          "second_h": {
+            "mean_abs": 8.54018044166398,
+            "variance": 716.1349133831559,
+            "kurtosis": 29.595432349557754,
+            "hist_entropy": 1.6866936216727533
+          },
+          "second_v": {
+            "mean_abs": 7.387339957921968,
+            "variance": 538.9502750518973,
+            "kurtosis": 32.934235496985465,
+            "hist_entropy": 1.7158265350279038
+          },
+          "bayar": {
+            "mean_abs": 4.629890663701391,
+            "variance": 168.8877063585557,
+            "kurtosis": 19.77701180536248,
+            "hist_entropy": 1.609779833945101
+          }
+        },
+        "filter_bank": [
+          "spam_h",
+          "spam_v",
+          "spam_d1",
+          "spam_d2",
+          "second_h",
+          "second_v",
+          "bayar"
+        ],
+        "citation": "Fridrich & Kodovsky SRM; TRIDENT spectral residual path",
+        "normalized_score": 0.3709
+      }
+    },
+    {
+      "id": "bayar",
+      "name": "Bayar Prediction Residual",
+      "score": 0.65,
+      "confidence": 0.55,
+      "weight": 0.07,
+      "findings": [
+        "Below-typical prediction residual energy (mean|e|=3.70)",
+        "Spatially inconsistent residual energy (CV=1.74) — possible mixed regions"
+      ],
+      "viz_url": "/api/v1/artifacts/<id>",
+      "details": {
+        "mean_abs_residual": 3.6969149112701416,
+        "std_abs_residual": 9.94895076751709,
+        "block_energy_cv": 1.7408220379454715,
+        "lag1_correlation": 0.24610215887448275,
+        "kernel": "bayar_constrained_3x3",
+        "normalized_score": 0.6061
+      }
+    },
+    {
+      "id": "local_corr",
+      "name": "Local Correlation / Upsampling Residue",
+      "score": 0.4,
+      "confidence": 0.55,
+      "weight": 0.09,
+      "findings": [
+        "Local correlation mean=0.925; NPR energy=3.22",
+        "Diagonal correlation bias (-0.040) with periodic NPR peaks (peak/mean=98.4) — upsampling lattice cue"
+      ],
+      "viz_url": "/api/v1/artifacts/<id>",
+      "details": {
+        "neighbor_corr": {
+          "h": 0.9372263833918351,
+          "v": 0.9533044379950077,
+          "d": 0.9084221015388495,
+          "ad": 0.9012276009944932,
+          "mean": 0.9250451309800464,
+          "anisotropy": 0.021157570664546866
+        },
+        "npr_energy_x2": 3.219391345977783,
+        "npr_energy_x4": 6.09658145904541,
+        "hv_gap": 0.016078054603172687,
+        "diag_bias": -0.04044055942675007,
+        "npr_spectral_peak_ratio": 98.35012817382812,
+        "citation": "NPR / ForenAgent local-correlation upsampling cues",
+        "normalized_score": 0.4293
+      }
+    },
+    {
+      "id": "texture",
+      "name": "Texture & Gradient",
+      "score": 0.42,
+      "confidence": 0.61,
+      "weight": 0.07,
+      "findings": [
+        "Strong natural-like gradient energy (mean=47.6)",
+        "Low local entropy (0.82) suggests homogenized regions",
+        "High GLCM homogeneity (0.95) / low contrast (0.15)"
+      ],
+      "viz_url": null,
+      "details": {
+        "mean_gradient": 47.60911178588867,
+        "soft_fraction": 0.7383349810866575,
+        "local_entropy": 0.8220722805922933,
+        "neighbor_mean_diff": 5.9583797827113845,
+        "grad_peakiness": 0.12579745612622767,
+        "glcm_contrast": 0.14776082677165353,
+        "glcm_homogeneity": 0.9493264025590551,
+        "laplacian_variance": 1082.337158203125,
+        "normalized_score": 0.4403
+      }
+    },
+    {
+      "id": "screenshot",
+      "name": "Screenshot Heuristic",
+      "score": 0.45,
+      "confidence": 0.5,
+      "weight": 0.04,
+      "findings": [
+        "Uniform borders (std=6.5) suggest UI chrome / capture",
+        "Large flat UI-like regions (45% of downscaled area)",
+        "Low corner color diversity (status/nav bar)",
+        "Many near-constant scanlines — UI / text background pattern",
+        "No strong screenshot/UI chrome signals"
+      ],
+      "viz_url": null,
+      "details": {
+        "screenshot_likelihood": 0.75,
+        "is_screenshot": false,
+        "chrome_cues": 0,
+        "flat_fraction": 0.44775390625,
+        "border_std": 6.504245487122153,
+        "aspect": 1.4081632653061225,
+        "edge_density": 0.06725400842033002,
+        "normalized_score": 0.4662
+      }
+    }
+  ]
+}
