@@ -106,7 +106,7 @@ Helpers: `./scripts/run-api.sh`, `./scripts/run-dev.sh`
 
 Weights are the SSOT in [`weights.py`](./apps/api/src/ai_image_authenticator/application/services/weights.py) and [docs/weights.md](./docs/weights.md).
 
-**Verdict bands:** `real` &lt; 0.35 · `inconclusive` 0.35–0.55 · `likely_ai` 0.55–0.75 · `ai_generated` ≥ 0.75
+**Verdict bands:** `real` < 0.35 · `inconclusive` 0.35–0.55 · `likely_ai` 0.55–0.75 · `ai_generated` ≥ 0.75
 
 ---
 
@@ -210,3 +210,7 @@ See [docs/contributing.md](./docs/contributing.md). New analyzers: implement the
 ## License
 
 [MIT](./LICENSE)
+
+## Support
+
+[![Buy Me a Coffee](https://img.shields.io/badge/buymeacoffee-black?style=for-the-badge&logo=buymeacoffee&logoColor=white)](https://buymeacoffee.com/santoshshin)
